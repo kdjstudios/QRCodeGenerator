@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1>Create a QR Code</h1>
+    <div>
+        @using (Html.BeginForm(null, null, FormMethod.Post))
+        {
+            <label>Enter text for creating QR Code</label>
+            <input type="text" name="qrText" />
+            <button>Submit</button>
+        }
+    </div>
+    @{
+        if (Model != null)
+        {
+            <h3>QR Code Successfully Generated</h3>
+            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model))" />
+        }
+    }
+</div>

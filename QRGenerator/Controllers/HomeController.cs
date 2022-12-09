@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QRGenerator.Models;
 using System.Diagnostics;
-using ZXing.QrCode.Internal;
-using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using ZXing.QrCode;
 
 namespace QRGenerator.Controllers
@@ -20,11 +15,6 @@ namespace QRGenerator.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
@@ -55,12 +45,7 @@ namespace QRGenerator.Controllers
                     }
                 };
                 var pixelData = qrCodeWriter.Write(qrText);
-
-                //https://github.com/micjahn/ZXing.Net
-                //https://jeremylindsayni.wordpress.com/2016/04/02/how-to-read-and-create-barcode-images-using-c-and-zxing-net/
-
-                // creating a bitmap from the raw pixel data; if only black and white colors are used it makes no difference   
-                // that the pixel data ist BGRA oriented and the bitmap is initialized with RGB   
+ 
                 using (var bitmap = new System.Drawing.Bitmap(pixelData.Width, pixelData.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
                 {
                     using (var ms = new MemoryStream())
@@ -75,7 +60,7 @@ namespace QRGenerator.Controllers
                         {
                             bitmap.UnlockBits(bitmapData);
                         }
-                        // save to stream as PNG   
+                        
                         bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                         byteArray = ms.ToArray();
                     }
